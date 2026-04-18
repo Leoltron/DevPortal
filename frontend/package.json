@@ -1,0 +1,8 @@
+{
+  "name": "devportal-frontend",
+  "private": true,
+  "scripts": {
+    "dev": "bun ./index.html",
+    "build": "bun build ./index.html --minify --outdir=./dist"
+  }
+}
