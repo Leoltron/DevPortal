@@ -5,7 +5,6 @@ let allTiles = [];
 let tagsDescription = {};
 let cardElements = [];
 let favCardElements = [];
-let categoryPriorities = {};
 let favorites = new Set(JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) || '[]'));
 
 let favoritesSection = null;
@@ -138,37 +137,27 @@ async function loadCatalog() {
         const res = await fetch("/api/tiles");
         if (!res.ok) throw new Error(`Failed to load catalog: ${res.statusText}`);
         const data = await res.json();
-        allTiles = data.tiles || [];
+        const categories = data.categories || [];
+        allTiles = categories.flatMap(c => c.tiles || []);
         tagsDescription = data.tagsDescription || {};
-        categoryPriorities = data.categoryPriorities || {};
-        initialRender(allTiles, categoryPriorities);
+        initialRender(categories);
     } catch (err) {
         console.error(err);
         appElement.innerHTML = `<div class="error">Error: ${escapeHtml(err.message)}</div>`;
     }
 }
 
-function initialRender(tiles, catPriorities) {
+function initialRender(categories) {
     appElement.innerHTML = "";
     cardElements = [];
     favCardElements = [];
     favoritesSection = null;
     favoritesGrid = null;
 
-    if (tiles.length === 0) {
+    if (categories.length === 0) {
         appElement.innerHTML = `<div class="no-results">No services found.</div>`;
         return;
     }
-
-    const groups = {};
-    tiles.forEach(tile => {
-        const cat = tile.category || "General";
-        if (!groups[cat]) {
-            groups[cat] = [];
-            catPriorities[cat] = catPriorities[cat] || 0;
-        }
-        groups[cat].push(tile);
-    });
 
     const container = document.createDocumentFragment();
 
@@ -187,20 +176,20 @@ function initialRender(tiles, catPriorities) {
 
     container.appendChild(favoritesSection);
 
-    Object.keys(groups).sort((c1, c2) => catPriorities[c1] - catPriorities[c2]).forEach(cat => {
+    [...categories].sort((a, b) => (a.priority ?? 0) - (b.priority ?? 0)).forEach(category => {
         const section = document.createElement("section");
         section.className = "category-section";
-        section.dataset.category = cat;
+        section.dataset.category = category.name;
 
         const header = document.createElement("h2");
         header.className = "category-title";
-        header.textContent = cat;
+        header.textContent = category.name;
         section.appendChild(header);
 
         const grid = document.createElement("div");
         grid.className = "card-grid";
 
-        groups[cat].forEach(tile => {
+        (category.tiles || []).forEach(tile => {
             const card = createCardElement(tile);
             grid.appendChild(card);
             cardElements.push({element: card, tile, section});

@@ -2,4 +2,4 @@ using System.Collections.Generic;
 
 namespace DevPortal.Models;
 
-public record TilesJsonDto(Tile[] Tiles, Dictionary<string, string>? TagsDescription = null, Dictionary<string, int>? CategoryPriorities = null);
+public record TilesJsonDto(TileCategory[] Categories, Dictionary<string, string>? TagsDescription = null);

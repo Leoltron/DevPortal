@@ -26,7 +26,7 @@ public partial class TileStore(TileJsonPathHolder pathHolder)
                 return false;
             }
 
-            var tiles = new TilesDto(dto.Tiles, DateTime.UtcNow, dto.TagsDescription);
+            var tiles = new TilesDto(dto.Categories, DateTime.UtcNow, dto.TagsDescription);
             Volatile.Write(ref _tiles, tiles);
         }
         catch (Exception e)
@@ -102,7 +102,8 @@ public partial class TileStore(TileJsonPathHolder pathHolder)
             return null;
         }
 
-        foreach (var tile in dto.Tiles)
+        foreach (var category in dto.Categories)
+        foreach (var tile in category.Tiles)
         {
             tile.Main.Icon = Icon.Resolve(tile.Main.Icon);
 

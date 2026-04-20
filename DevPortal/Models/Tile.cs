@@ -5,7 +5,6 @@ public record Tile(
     string Description,
     string[] Tags,
     string[] Aliases,
-    string? Category,
     Link[]? AdditionalLinks,
     int? Width = 3,
     int? Height = 3);

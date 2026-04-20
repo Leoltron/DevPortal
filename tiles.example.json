@@ -1,114 +1,134 @@
 {
-  "tiles": [
+  "categories": [
     {
-      "main": {
-        "title": "Development Portal Docs",
-        "url": "https://github.com/example/devportal",
-        "icon": "https://unpkg.com/heroicons@2.0.18/24/outline/book-open.svg",
-        "iconBg": "#1e3a8a"
-      },
-      "description": "Comprehensive documentation for the DevPortal project, including setup guides and API references.",
-      "tags": [
-        "documentation",
-        "internal"
-      ],
-      "category": "Documentation",
-      "additionalLinks": [
+      "name": "Documentation",
+      "priority": 1,
+      "tiles": [
         {
-          "title": "Quick Start",
-          "url": "https://github.com/example/devportal#quick-start",
-          "icon": "https://unpkg.com/heroicons@2.0.18/24/outline/star.svg",
-          "iconColor": "#fbbf24"
+          "main": {
+            "title": "Development Portal Docs",
+            "url": "https://github.com/example/devportal",
+            "icon": "https://unpkg.com/heroicons@2.0.18/24/outline/book-open.svg",
+            "iconBg": "#1e3a8a"
+          },
+          "description": "Comprehensive documentation for the DevPortal project, including setup guides and API references.",
+          "tags": [
+            "documentation",
+            "internal"
+          ],
+          "additionalLinks": [
+            {
+              "title": "Quick Start",
+              "url": "https://github.com/example/devportal#quick-start",
+              "icon": "https://unpkg.com/heroicons@2.0.18/24/outline/star.svg",
+              "iconColor": "#fbbf24"
+            },
+            {
+              "title": "Architecture",
+              "url": "https://github.com/example/devportal/blob/main/docs/architecture.md",
+              "icon": "https://unpkg.com/heroicons@2.0.18/24/outline/cube.svg",
+              "iconColor": "#60a5fa"
+            }
+          ],
+          "width": 6,
+          "height": 3
+        }
+      ]
+    },
+    {
+      "name": "Infrastructure",
+      "tiles": [
+        {
+          "main": {
+            "title": "Docker Registry",
+            "url": "https://hub.docker.com",
+            "icon": "https://unpkg.com/heroicons@2.0.18/24/outline/archive-box.svg",
+            "iconBg": "#064e3b"
+          },
+          "description": "Internal container registry for all microservices.",
+          "tags": [
+            "infrastructure",
+            "devops"
+          ],
+          "additionalLinks": [
+            {
+              "title": "Images",
+              "url": "https://hub.docker.com/search",
+              "icon": "https://unpkg.com/heroicons@2.0.18/24/outline/magnifying-glass.svg",
+              "iconColor": "#38bdf8"
+            }
+          ],
+          "width": 3,
+          "height": 3
+        }
+      ]
+    },
+    {
+      "name": "Utilities",
+      "tiles": [
+        {
+          "main": {
+            "title": "Search Engine",
+            "url": "https://google.com",
+            "icon": "https://unpkg.com/heroicons@2.0.18/24/outline/magnifying-glass.svg",
+            "iconBg": "#4c1d95"
+          },
+          "description": "Global search utility for finding external resources and information.",
+          "tags": [
+            "external",
+            "utility"
+          ],
+          "width": 3,
+          "height": 3
+        }
+      ]
+    },
+    {
+      "name": "Services",
+      "tiles": [
+        {
+          "main": {
+            "title": "Favorite Service",
+            "url": "https://example.com/fav",
+            "icon": "https://unpkg.com/heroicons@2.0.18/24/solid/star.svg",
+            "iconBg": "#713f12"
+          },
+          "description": "A highly rated internal service used by most teams daily.",
+          "tags": [
+            "popular"
+          ],
+          "width": 3,
+          "height": 2
         },
         {
-          "title": "Architecture",
-          "url": "https://github.com/example/devportal/blob/main/docs/architecture.md",
-          "icon": "https://unpkg.com/heroicons@2.0.18/24/outline/cube.svg",
-          "iconColor": "#60a5fa"
+          "main": {
+            "title": "Legacy Component",
+            "url": "",
+            "icon": "https://unpkg.com/heroicons@2.0.18/24/outline/cube.svg",
+            "iconBg": "#451a03"
+          },
+          "description": "Maintained for backward compatibility. No direct URL access.",
+          "tags": [
+            "legacy"
+          ],
+          "width": 3,
+          "height": 2
         }
-      ],
-      "width": 6,
-      "height": 3
+      ]
     },
     {
-      "main": {
-        "title": "Docker Registry",
-        "url": "https://hub.docker.com",
-        "icon": "https://unpkg.com/heroicons@2.0.18/24/outline/archive-box.svg",
-        "iconBg": "#064e3b"
-      },
-      "description": "Internal container registry for all microservices.",
-      "tags": [
-        "infrastructure",
-        "devops"
-      ],
-      "category": "Infrastructure",
-      "additionalLinks": [
+      "name": "General",
+      "tiles": [
         {
-          "title": "Images",
-          "url": "https://hub.docker.com/search",
-          "icon": "https://unpkg.com/heroicons@2.0.18/24/outline/magnifying-glass.svg",
-          "iconColor": "#38bdf8"
+          "main": {
+            "title": "Simple Link",
+            "url": "https://example.com"
+          },
+          "description": "A minimalist tile with only a title, URL and description.",
+          "width": 3,
+          "height": 1
         }
-      ],
-      "width": 3,
-      "height": 3
-    },
-    {
-      "main": {
-        "title": "Search Engine",
-        "url": "https://google.com",
-        "icon": "https://unpkg.com/heroicons@2.0.18/24/outline/magnifying-glass.svg",
-        "iconBg": "#4c1d95"
-      },
-      "description": "Global search utility for finding external resources and information.",
-      "tags": [
-        "external",
-        "utility"
-      ],
-      "category": "Utilities",
-      "width": 3,
-      "height": 3
-    },
-    {
-      "main": {
-        "title": "Favorite Service",
-        "url": "https://example.com/fav",
-        "icon": "https://unpkg.com/heroicons@2.0.18/24/solid/star.svg",
-        "iconBg": "#713f12"
-      },
-      "description": "A highly rated internal service used by most teams daily.",
-      "tags": [
-        "popular"
-      ],
-      "category": "Services",
-      "width": 3,
-      "height": 2
-    },
-    {
-      "main": {
-        "title": "Legacy Component",
-        "url": "",
-        "icon": "https://unpkg.com/heroicons@2.0.18/24/outline/cube.svg",
-        "iconBg": "#451a03"
-      },
-      "description": "Maintained for backward compatibility. No direct URL access.",
-      "tags": [
-        "legacy"
-      ],
-      "category": "Services",
-      "width": 3,
-      "height": 2
-    },
-    {
-      "main": {
-        "title": "Simple Link",
-        "url": "https://example.com"
-      },
-      "description": "A minimalist tile with only a title, URL and description.",
-      "category": "General",
-      "width": 3,
-      "height": 1
+      ]
     }
   ]
 }
