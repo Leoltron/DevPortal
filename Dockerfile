@@ -4,7 +4,8 @@ ENV ASPNETCORE_HTTP_PORTS=8080
 
 FROM docker.io/oven/bun:alpine AS frontend
 WORKDIR /src 
-COPY --exclude=./frontend/public ./frontend .
+COPY ./frontend/src ./src
+COPY ./frontend/favicon.svg ./frontend/index.html .
 RUN bun build ./index.html --minify --outdir=./dist
 COPY ./frontend/public ./dist
 
