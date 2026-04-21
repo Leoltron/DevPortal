@@ -15,8 +15,8 @@ public static partial class Icon
     public static void Initialize(IWebHostEnvironment env)
     {
         var iconDir = env.IsDevelopment()
-            ? Path.GetFullPath(Path.Combine(env.ContentRootPath, "..", "frontend", "assets", "icons"))
-            : Path.Combine(env.ContentRootPath, "wwwroot", "assets", "icons");
+            ? Path.GetFullPath(Path.Combine(env.ContentRootPath, "..", "frontend", "public", "icons"))
+            : Path.Combine(env.ContentRootPath, "wwwroot", "icons");
 
         if (!Directory.Exists(iconDir))
         {
@@ -37,7 +37,7 @@ public static partial class Icon
     {
         if (string.IsNullOrEmpty(icon)) return "";
 
-        return IconMap.TryGetValue(icon, out var path) ? $"./assets/icons/{path}" : icon;
+        return IconMap.TryGetValue(icon, out var path) ? $"./icons/{path}" : icon;
     }
 
     [LoggerMessage(Level = LogLevel.Error, Message = "Icon directory not found: {IconDir}")]

@@ -17,9 +17,9 @@ public static class Program
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateSlimBuilder(args);
-        
+
         var tileJsonPathHolder = new TileJsonPathHolder();
-        
+
         builder.Services.AddSingleton(tileJsonPathHolder);
         builder.Services.AddSingleton<TileStore>();
         builder.Services.AddHostedService<TileReloadService>();
@@ -39,7 +39,7 @@ public static class Program
         {
             throw new Exception("Could not load tiles");
         }
-        
+
 #if DEBUG
         if (app.Environment.IsDevelopment())
         {
@@ -48,7 +48,9 @@ public static class Program
 
             app.UseFileServer(new FileServerOptions
             {
-                FileProvider = new PhysicalFileProvider(devFrontendPath)
+                FileProvider = new CompositeFileProvider(
+                    new PhysicalFileProvider(devFrontendPath),
+                    new PhysicalFileProvider(Path.Combine(devFrontendPath, "public")))
             });
         }
         else

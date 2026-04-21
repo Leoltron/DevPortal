@@ -4,8 +4,9 @@ ENV ASPNETCORE_HTTP_PORTS=8080
 
 FROM docker.io/oven/bun:alpine AS frontend
 WORKDIR /src 
-COPY ./frontend .
+COPY --exclude=./frontend/public ./frontend .
 RUN bun build ./index.html --minify --outdir=./dist
+COPY ./frontend/public ./dist
 
 FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine-aot AS build
 ARG BUILD_CONFIGURATION=Release
@@ -15,7 +16,6 @@ RUN dotnet restore DevPortal.csproj
 
 COPY DevPortal .
 COPY --from=frontend /src/dist ./wwwroot
-COPY ./frontend/assets ./wwwroot/assets
 
 RUN dotnet publish DevPortal.csproj \
     -c Release \
