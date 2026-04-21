@@ -22,13 +22,15 @@ RUN dotnet publish DevPortal.csproj \
     -r linux-musl-x64 \
     --self-contained true \
     -o /out \
-    /p:PublishAot=true \
-    /p:StaticExecutable=true 
-
-RUN ls -lah /out
+    -p:IlcGenerateStackTraceData=true \
+    -p:DebugType=none \
+    -p:DebugSymbols=false \
+    -p:PublishAot=true \
+    -p:StaticExecutable=true 
 
 FROM base AS final
 WORKDIR /app
-COPY --from=build /out/DevPortal /out/DevPortal.staticwebassets.endpoints.json .
-COPY --from=build /out/wwwroot ./wwwroot
+COPY --from=build --chown=10001:10001 /out/DevPortal /out/DevPortal.staticwebassets.endpoints.json .
+COPY --from=build --chown=10001:10001 /out/wwwroot ./wwwroot
+USER 10001:10001
 ENTRYPOINT ["/app/DevPortal"]
