@@ -71,7 +71,7 @@ function createCardElement(tile) {
         ${hasPrimary ? `<a href="${escapeHtml(tile.main.url)}" class="card-link" target="_blank" rel="noopener noreferrer" aria-label="Open ${escapeHtml(tile.main.title)}"></a>` : ""}
         <div class="card-header">
             <div class="card-icon"${mainIconBgStyle}>
-                ${tile.main.icon ? `<img class="icon" src="${escapeHtml(tile.main.icon)}" alt="">` : `<img class="icon-default-color" src="./assets/icons/cube.svg" alt="">`}
+                ${tile.main.icon ? `<img class="icon" src="${escapeHtml(tile.main.icon)}" alt="">` : `<img class="icon-default-color" src="./icons/cube.svg" alt="">`}
             </div>
             <div class="card-title-area">
                 <h3 class="card-title" data-field="title">${escapeHtml(tile.main.title)}</h3>
