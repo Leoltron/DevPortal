@@ -171,7 +171,7 @@ function initialRender(categories) {
     favoritesSection.appendChild(favHeader);
 
     favoritesGrid = document.createElement("div");
-    favoritesGrid.className = "card-grid";
+    favoritesGrid.className = "card-grid card-grid__favorites";
     favoritesSection.appendChild(favoritesGrid);
 
     container.appendChild(favoritesSection);

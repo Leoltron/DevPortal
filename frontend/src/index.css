@@ -124,6 +124,10 @@ body {
     gap: 1.5rem;
 }
 
+.card-grid__favorites {
+    grid-template-columns: repeat(12, 1fr);
+}
+
 .card {
     background-color: var(--card-bg);
     border: 1px solid var(--card-bg);
@@ -379,5 +383,9 @@ mark {
     .card-grid {
         grid-template-columns: 1fr;
         column-gap: 0;
+    }
+
+    .card-grid__favorites {
+        grid-template-columns: 1fr;
     }
 }
