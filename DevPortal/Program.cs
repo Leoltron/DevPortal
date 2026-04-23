@@ -23,6 +23,7 @@ public static class Program
         builder.Services.AddSingleton(tileJsonPathHolder);
         builder.Services.AddSingleton<TileStore>();
         builder.Services.AddHostedService<TileReloadService>();
+        builder.Services.AddHealthChecks();
 
         builder.Services.ConfigureHttpJsonOptions(options =>
         {
@@ -62,6 +63,7 @@ public static class Program
         }
 
         app.MapGet("/api/tiles", (TileStore s) => s.Tiles);
+        app.MapHealthChecks("/healthz");
 
         await app.RunAsync();
     }
