@@ -10,8 +10,8 @@ let favorites = new Set(JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) |
 let favoritesSection = null;
 let favoritesGrid = null;
 
-const appElement = document.getElementById("app");
-const searchInput = document.getElementById("search-input");
+let appElement = null;
+let searchInput = null;
 
 function escapeHtml(str) {
     if (!str) return "";
@@ -51,6 +51,23 @@ function toggleFavorite(name) {
     handleSearch();
 }
 
+function renderTag(tag) {
+    const description = tagsDescription[tag];
+    return `<span class="tag"${description ? ` title="${escapeHtml(description)}"` : ""}>${escapeHtml(tag)}</span>`;
+}
+
+function renderAdditionalLink(link) {
+    let iconHtml = "";
+    if (link.icon) {
+        const iconEscaped = escapeHtml(link.icon);
+        iconHtml = `<span class="icon" style="mask-image: url(${iconEscaped}); -webkit-mask-image: url(${iconEscaped});${link.iconColor ? ` color: ${escapeHtml(link.iconColor)}` : ""}"></span>`;
+    }
+    return `<a href="${escapeHtml(link.url)}" class="secondary-link" target="_blank" rel="noopener noreferrer">
+                ${iconHtml}
+                <span>${escapeHtml(link.title)}</span>
+            </a>`;
+}
+
 function createCardElement(tile) {
     const card = document.createElement("div");
     card.className = "card";
@@ -60,8 +77,6 @@ function createCardElement(tile) {
     if (width > 1) card.style.gridColumn = `span ${width}`;
     if (height > 1) card.style.gridRow = `span ${height}`;
 
-    const hasLinks = tile.additionalLinks && tile.additionalLinks.length > 0;
-    const hasTags = tile.tags && tile.tags.length > 0;
     const hasPrimary = tile.main && tile.main.url;
 
     if (hasPrimary) card.classList.add("has-primary");
@@ -78,30 +93,18 @@ function createCardElement(tile) {
             </div>
         </div>
         <p class="card-description" data-field="description">${escapeHtml(tile.description)}</p>
-        ${hasTags ? `
+        ${tile.tags && tile.tags.length > 0 ? `
         <div class="tag-list" data-field="tags">
-            ${(tile.tags || []).map(tag => {
-        const description = tagsDescription[tag];
-        const titleAttr = description ? ` title="${escapeHtml(description)}"` : "";
-        return `<span class="tag"${titleAttr}>${escapeHtml(tag)}</span>`;
-    }).join("")}
+            ${tile.tags.map(renderTag).join("")}
         </div>` : ""}
-        ${hasLinks ? `
+        ${tile.additionalLinks && tile.additionalLinks.length > 0 ? `
         <div class="card-actions">
             <div class="secondary-links" data-field="links">
-                ${(tile.additionalLinks || []).map(link => {
-        const iconStyle = link.icon ? ` style="mask-image: url(${escapeHtml(link.icon)}); -webkit-mask-image: url(${escapeHtml(link.icon)}); ${link.iconColor ? `color: ${escapeHtml(link.iconColor)}` : ""}"` : "";
-        return `
-                        <a href="${escapeHtml(link.url)}" class="secondary-link" target="_blank" rel="noopener noreferrer">
-                            ${link.icon ? `<span class="icon"${iconStyle}></span>` : ""}
-                            <span>${escapeHtml(link.title)}</span>
-                        </a>
-                    `;
-    }).join("")}
+                ${tile.additionalLinks.map(renderAdditionalLink).join("")}
             </div>
         </div>` : ""}
     `;
-
+    
     const starBtn = document.createElement('button');
     starBtn.type = 'button';
     starBtn.className = 'star-btn' + (favorites.has(tile.main.title) ? ' favorited' : '');
@@ -274,10 +277,31 @@ function handleSearch() {
 }
 
 let searchTimeout;
-searchInput.addEventListener("input", () => {
-    clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(handleSearch, 150);
+document.addEventListener('DOMContentLoaded', () => {
+    appElement = document.getElementById("app");
+    if (appElement === null) {
+        console.error("App element not found.")
+        return;
+    }
+
+    searchInput = document.getElementById("search-input");
+    if (searchInput === null) {
+        console.error("Search input not found.")
+        return;
+    }
+
+    searchInput.addEventListener("input", () => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(handleSearch, 150);
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey || e.altKey || e.metaKey) return;
+        if (e.key.length !== 1) return;
+        const active = document.activeElement;
+        if (active === searchInput) return;
+        searchInput.focus();
+    });
+
+    loadCatalog()
 });
-
-
-document.addEventListener('DOMContentLoaded', () => loadCatalog());
